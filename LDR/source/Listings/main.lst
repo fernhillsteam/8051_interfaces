@@ -1,0 +1,95 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/10/2021 10:41:36 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*  Name     : main.c
+   2           *  Purpose  : Source code for LDR with AT89C51.
+   3           *  Author   : Sunil Pawar
+   4           *  Date     : 10-07-2021
+   5           */
+   6          
+   7          #include <reg51.h>
+   8          #include "lcd.h"
+   9          
+  10          sbit ldr = P1^0;    ///*** MONITORING FOR DAY/NIGHT TIME   ****///
+  11          sbit ir1 = P1^2;    //**** TO DETECT THE MOVEMENT OF VEHICLE OR OBJECT ***///
+  12          sbit ir2 = P1^3;
+  13          sbit led1 = P1^4;   ///*** STRRET LIGHTS    *********///
+  14          sbit led2 = P1^5;
+  15          void main()
+  16          {
+  17   1        led1=led2=0;
+  18   1        lcd_init();
+  19   1        lcd_cmd(0x80);
+  20   1        lcd_string("STREET LIGHT");
+  21   1        lcd_cmd(0xc0);
+  22   1        lcd_string("control system");
+  23   1        delay(500);
+  24   1        lcd_cmd(0x01);
+  25   1        lcd_cmd(0x80);
+  26   1        lcd_string("status:      ");
+  27   1        lcd_cmd(0xc0);
+  28   1        lcd_string("light:       ");
+  29   1        while(1)
+  30   1        {
+  31   2          if(ldr==1)  // Night time
+  32   2          {
+  33   3              lcd_cmd(0x88);
+  34   3              lcd_string("NIGHT");
+  35   3              lcd_cmd(0xc7);
+  36   3              lcd_string("OFF");
+  37   3              if(ir1==0)              // if anr object detects
+  38   3              {
+  39   4                  lcd_cmd(0xc7);
+  40   4                  lcd_string("ON ");  // street light-1 is ON
+  41   4                  led1=1;
+  42   4                  delay(1000);
+  43   4                  led1=0;
+  44   4                  delay(5);             
+  45   4              }
+  46   3              if(ir2==0)
+  47   3              {
+  48   4                  lcd_cmd(0xc7);
+  49   4                  lcd_string("ON ");  // street light-2 is ON
+  50   4                  led2=1;
+  51   4                  delay(1000);
+  52   4                  led2=0;
+  53   4                  delay(5);             
+  54   4              }
+C51 COMPILER V9.60.0.0   MAIN                                                              07/10/2021 10:41:36 PAGE 2   
+
+  55   3          }
+  56   2          else        // Day time
+  57   2          {
+  58   3            lcd_cmd(0x87);
+  59   3            lcd_string("DAY      ");
+  60   3            lcd_cmd(0xc7);
+  61   3            lcd_string("OFF      ");
+  62   3            led1=led2=0;                // both street lights are off
+  63   3            delay(5);   
+  64   3          }
+  65   2        }
+  66   1      }
+  67          
+  68          
+  69          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    368    ----
+   CONSTANT SIZE    =     90    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

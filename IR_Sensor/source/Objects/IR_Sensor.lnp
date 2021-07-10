@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\sensor.obj" 
+TO ".\Objects\IR_Sensor" 
+PRINT(".\Listings\IR_Sensor.m51")

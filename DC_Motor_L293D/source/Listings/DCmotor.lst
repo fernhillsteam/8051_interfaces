@@ -1,0 +1,60 @@
+C51 COMPILER V9.60.0.0   DCMOTOR                                                           07/09/2021 17:27:15 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DCMOTOR
+OBJECT MODULE PLACED IN .\Objects\DCmotor.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE DCmotor.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\D
+                    -Cmotor.lst) TABS(2) OBJECT(.\Objects\DCmotor.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit switch1=P1^0;
+   3          sbit switch2=P1^1;
+   4          sbit switch3=P1^2;
+   5          sbit switch4=P1^3;
+   6          sbit switch5=P1^4;
+   7          
+   8          void main()
+   9          {
+  10   1        P1=0x00;
+  11   1        P2=0x00;
+  12   1        while(1)
+  13   1        {
+  14   2          if(switch1==1)
+  15   2          {
+  16   3            P2=0x09;  //1001
+  17   3          }
+  18   2          if(switch2==1)
+  19   2          {
+  20   3            P2=0x04;    //0100  motor2 reverse
+  21   3      //      P2=0x02;  //0010 motor1 reverse
+  22   3          }
+  23   2          if(switch3==1)
+  24   2          {
+  25   3            P2=0x01;  //0001
+  26   3          }
+  27   2          if(switch4==1)
+  28   2          {
+  29   3            P2=0x06;  //0101
+  30   3          }
+  31   2          if(switch5==1)
+  32   2          {
+  33   3            P2=0x00;//0000
+  34   3          }
+  35   2        } 
+  36   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     37    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

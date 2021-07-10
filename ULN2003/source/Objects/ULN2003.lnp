@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\ULN2003" 
+PRINT(".\Listings\ULN2003.m51")

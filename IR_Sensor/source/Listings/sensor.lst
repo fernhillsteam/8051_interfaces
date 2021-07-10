@@ -1,0 +1,111 @@
+C51 COMPILER V9.60.0.0   SENSOR                                                            07/10/2021 14:40:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SENSOR
+OBJECT MODULE PLACED IN .\Objects\sensor.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE sensor.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\se
+                    -nsor.lst) TABS(2) OBJECT(.\Objects\sensor.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit rs=P2^0; //register select
+   3          sbit rw=P2^1; //RW
+   4          sbit en=P2^2; //enable
+   5          #define lcd P3
+   6          sbit ir=P1^0;
+   7          sbit relay=P2^3;
+   8          
+   9          void lcd_init();
+  10          void lcd_display(char *s);
+  11          void lcd_cmd(unsigned char);
+  12          void lcd_data(unsigned char);
+  13          void delay();
+  14          
+  15          void main()
+  16          {
+  17   1        lcd_init();
+  18   1        lcd_display("AUTOMATIC ROOM");
+  19   1        lcd_cmd(0xc0);
+  20   1        lcd_display("LIGHT CONTROL IR");
+  21   1        while(1)
+  22   1        {
+  23   2          if(ir==1)
+  24   2          {
+  25   3            lcd_cmd(0x01);
+  26   3            lcd_display("SENSOR DETECTED");
+  27   3            lcd_cmd(0xc0);
+  28   3            lcd_display("LIGHT ON");
+  29   3            relay = 0;
+  30   3            while(ir==1);         
+  31   3          }
+  32   2          else
+  33   2          {
+  34   3            lcd_cmd(0x01);
+  35   3            lcd_display("NO SENSOR DETECTED");
+  36   3            lcd_cmd(0xc0);
+  37   3            lcd_display("LIGHT OFF");
+  38   3            relay = 1;
+  39   3          }
+  40   2        }
+  41   1      }
+  42          void lcd_init()
+  43          {
+  44   1          lcd_cmd(0x38);
+  45   1          lcd_cmd(0x0e);
+  46   1          lcd_cmd(0x06);
+  47   1          lcd_cmd(0x01);
+  48   1          lcd_cmd(0x80);
+  49   1      }
+  50          void lcd_cmd(unsigned char val)
+  51          {
+  52   1          P3 =val;
+  53   1          rs=0;
+  54   1          rw=0;
+C51 COMPILER V9.60.0.0   SENSOR                                                            07/10/2021 14:40:58 PAGE 2   
+
+  55   1          en=1;
+  56   1          delay();
+  57   1          en=0;
+  58   1      }
+  59          
+  60          void lcd_data(unsigned char val)
+  61          {
+  62   1          P3=val;
+  63   1          rs=1;
+  64   1          rw=0;
+  65   1          en=1;
+  66   1          delay();
+  67   1          en=0;
+  68   1      }
+  69          void lcd_display(unsigned char *s)
+  70          {
+  71   1      //    unsigned char i;
+  72   1      //  for(i=0; s[i]!='\0';i++)
+  73   1      //  {
+  74   1      //       lcd_data(s[i]);
+  75   1       //    }
+  76   1            while(*s) {
+  77   2             lcd_data(*s++);
+  78   2           }
+  79   1      }
+  80          void delay()
+  81          {
+  82   1          unsigned int i;
+  83   1          for(i=0;i<20000;i++);
+  84   1      }
+  85          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    201    ----
+   CONSTANT SIZE    =     86    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

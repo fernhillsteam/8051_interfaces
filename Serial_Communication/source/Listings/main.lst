@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/09/2021 16:28:43 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          void UART_Init()
+   4          { 
+   5   1          SCON = 0x50;  // Asynchronous mode, 8-bit data and 1-stop bit
+   6   1          TMOD = 0x20;  //Timer1 in Mode2.
+   7   1          TH1 = 0xFD; // Load timer value for baudrate generation
+   8   1          TR1 = 1;      //Turn ON the timer for Baud rate generation
+   9   1      }
+  10          
+  11          void UART_TxChar(char ch)
+  12          {
+  13   1          SBUF = ch;      // Load the data to be transmitted
+  14   1          while(TI==0);   // Wait till the data is trasmitted
+  15   1          TI = 0;         //Clear the Tx flag for next cycle.
+  16   1      }
+  17          
+  18          
+  19          char UART_RxChar(void)
+  20          {
+  21   1          while(RI==0);     // Wait till the data is received
+  22   1          RI=0;             // Clear Receive Interrupt Flag for next cycle
+  23   1          return(SBUF);     // return the received char
+  24   1      }
+  25          
+  26          
+  27          int main()
+  28          {
+  29   1          char i,a[]={"Welcome TO SERIAL COMMUNICATION"};
+  30   1          char ch;
+  31   1      
+  32   1          UART_Init();       //Initialize the UART module with 9600 baud rate
+  33   1          for(i=0;a[i]!=0;i++)
+  34   1          {
+  35   2              UART_TxChar(a[i]); // Transmit predefined string
+  36   2          }
+  37   1      
+  38   1          while(1)
+  39   1          {
+  40   2              ch = UART_RxChar(); // Receive a char from serial port
+  41   2              UART_TxChar(ch);    // Transmit the received char
+  42   2          }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     79    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      32
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.0.0   MAIN                                                              07/09/2021 16:28:43 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

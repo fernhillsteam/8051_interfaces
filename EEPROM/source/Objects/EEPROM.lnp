@@ -1,0 +1,6 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\i2c.obj",
+".\Objects\lcd.obj" 
+TO ".\Objects\EEPROM" 
+PRINT(".\Listings\EEPROM.m51")

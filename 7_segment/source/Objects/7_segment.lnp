@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\7_segment" 
+PRINT(".\Listings\7_segment.m51")

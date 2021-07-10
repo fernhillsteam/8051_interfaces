@@ -1,0 +1,174 @@
+C51 COMPILER V9.60.0.0   KEY                                                               07/08/2021 20:29:00 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.l
+                    -st) TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #define msec 50
+   3          sbit rs=P0^0;   //Register select (RS   //Read write (RW) pin
+   4          sbit en=P0^1;   //Enable (EN) pin
+   5          sbit R1 = P3^0;
+   6          sbit R2 = P3^1;
+   7          sbit R3 = P3^2;
+   8          sbit R4 = P3^3;
+   9          sbit C1 = P3^4;
+  10          sbit C2 = P3^5;
+  11          sbit C3 = P3^6;
+  12          sbit C4 = P3^7;
+  13          void delay(int);
+  14          char Read_Keypad()
+  15          {
+  16   1       C1=1;
+  17   1       C2=1;
+  18   1       C3=1;
+  19   1       C4=1;
+  20   1       R1=0;
+  21   1       R2=1;
+  22   1       R3=1;
+  23   1       R4=1;
+  24   1       if(C1==0){delay(100);while(C1==0);return '7';}//0
+  25   1       if(C2==0){delay(100);while(C2==0);return '8';}//4
+  26   1       if(C3==0){delay(100);while(C3==0);return '9';}//8
+  27   1       if(C4==0){delay(100);while(C4==0);return '/';}//c
+  28   1       R1=1;
+  29   1       R2=0;
+  30   1       R3=1;
+  31   1       R4=1;
+  32   1       if(C1==0){delay(100);while(C1==0);return '4';}//1
+  33   1       if(C2==0){delay(100);while(C2==0);return '5';}//5
+  34   1       if(C3==0){delay(100);while(C3==0);return '6';}//9
+  35   1       if(C4==0){delay(100);while(C4==0);return '*';}//5
+  36   1       R1=1;
+  37   1       R2=1;
+  38   1       R3=0;
+  39   1       R4=1;
+  40   1       if(C1==0){delay(100);while(C1==0);return '1';}//2
+  41   1       if(C2==0){delay(100);while(C2==0);return '2';}//6
+  42   1       if(C3==0){delay(100);while(C3==0);return '3';}//a
+  43   1       if(C4==0){delay(100);while(C4==0);return '-';}//e
+  44   1       R1=1;
+  45   1       R2=1;
+  46   1       R3=1;
+  47   1       R4=0;
+  48   1       if(C1==0){delay(100);while(C1==0);return 'c';}//3
+  49   1       if(C2==0){delay(100);while(C2==0);return '0';}//7
+  50   1       if(C3==0){delay(100);while(C3==0);return '=';}//b
+  51   1       if(C4==0){delay(100);while(C4==0);return '+';}//f
+  52   1       return 0 ;
+  53   1      }
+  54          
+C51 COMPILER V9.60.0.0   KEY                                                               07/08/2021 20:29:00 PAGE 2   
+
+  55          void delay(int time)  //Time delay function
+  56          {
+  57   1      unsigned int i,j;
+  58   1      for(i=0;i<time;i++)
+  59   1        for(j=0;j<1275;j++);
+  60   1      }
+  61          
+  62          void lcdcmd(unsigned char value)  //Function for sending values to the command register of LCD
+  63          {
+  64   1      P2=value;
+  65   1      rs=0;
+  66   1      en=0;
+  67   1      delay(15);
+  68   1      en=1;
+  69   1      return;
+  70   1      }
+  71          
+  72          void lcddata(unsigned char value1)  //Function for sending values to the data register of LCD
+  73          {
+  74   1        rs=1;
+  75   1      P2=value1;
+  76   1      en=0;
+  77   1      delay(15);
+  78   1      en=1;
+  79   1      return;
+  80   1      }
+  81           
+  82          void lcdstring(char *a)
+  83          {
+  84   1        int i;
+  85   1        for(i=0;a[i]!='\0';i++)
+  86   1         lcddata(a[i]);
+  87   1      }
+  88          void lcdinit(void)
+  89          {
+  90   1        lcdcmd(0X30);
+  91   1        delay(25);
+  92   1        lcdcmd(0X30);
+  93   1        delay(25);
+  94   1        lcdcmd(0X30);
+  95   1        delay(25);
+  96   1        
+  97   1        lcdcmd(0x38); //set LCD in  5x7 mode
+  98   1        delay(20);
+  99   1        lcdcmd(0x0c);  //Cursor blinking
+ 100   1        delay(20);
+ 101   1        lcdcmd(0x01);  // clear LCD
+ 102   1        delay(20);
+ 103   1        lcdcmd(0x06);  //set cursor on  first position of first line on LCD
+ 104   1        delay(20);
+ 105   1      }
+ 106            
+ 107          void main()
+ 108          { 
+ 109   1        int i=0;
+ 110   1        char a;
+ 111   1        char c[4];
+ 112   1        lcdinit();
+ 113   1        lcdstring("Welcome to");
+ 114   1        delay(5);
+ 115   1        lcdcmd(0xc0);
+ 116   1        lcdstring("rolling display");
+C51 COMPILER V9.60.0.0   KEY                                                               07/08/2021 20:29:00 PAGE 3   
+
+ 117   1        delay(50);
+ 118   1        lcdcmd(0x01);
+ 119   1        lcdstring("enter 5 digits");
+ 120   1        delay(100);
+ 121   1      while(1)
+ 122   1      {
+ 123   2        for(i=0;i<5;i++)
+ 124   2        {
+ 125   3          while(!(c[i] = Read_Keypad()));
+ 126   3      //  Read_Keypad();
+ 127   3          delay(50);
+ 128   3          delay(50);
+ 129   3          lcdcmd(0x01);
+ 130   3          lcddata(c[i]);
+ 131   3        }
+ 132   2        lcdinit();
+ 133   2        for(i=0;i<5;i++)
+ 134   2        {
+ 135   3        lcddata(c[i]);
+ 136   3        }
+ 137   2        for(i=0;i<1000000000;i++)
+ 138   2          {
+ 139   3            lcdcmd(0x1c);
+ 140   3            delay(30);
+ 141   3          
+ 142   3        
+ 143   3          }
+ 144   2      }   
+ 145   1      }
+*** WARNING C280 IN LINE 110 OF key.c: 'a': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    622    ----
+   CONSTANT SIZE    =     42    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

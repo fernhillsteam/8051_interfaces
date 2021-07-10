@@ -1,0 +1,169 @@
+C51 COMPILER V9.60.0.0   KEYPAD4X4                                                         07/08/2021 23:08:03 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEYPAD4X4
+OBJECT MODULE PLACED IN .\Objects\keypad4x4.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keypad4x4.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\keypad4x4.lst) TABS(2) OBJECT(.\Objects\keypad4x4.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #define lcd P2      //Data pins connected to port 2 on microcontroller
+   3          sbit rs = P3^0;  //RS pin connected to pin 2 of port 3
+   4          sbit rw = P3^1;  // RW pin connected to pin 3 of port 3
+   5          sbit e =  P3^2;  //E pin connected to pin 4 of port 3
+   6          
+   7          sbit C4 = P1^0;     // Connecting keypad to Port 1
+   8          sbit C3 = P1^1;
+   9          sbit C2 = P1^2;
+  10          sbit C1 = P1^3;
+  11          sbit R4 = P1^4;
+  12          sbit R3 = P1^5;
+  13          sbit R2 = P1^6;
+  14          sbit R1 = P1^7;
+  15          
+  16          void msdelay(unsigned int time)  // Function for creating delay in milliseconds.
+  17          {
+  18   1          unsigned i,j ;
+  19   1          for(i=0;i<time;i++)    
+  20   1          for(j=0;j<1275;j++);
+  21   1      }
+  22          void lcd_cmd(unsigned char command)  //Function to send command instruction to LCD
+  23          {
+  24   1          lcd = command;
+  25   1          rs= 0;
+  26   1          rw=0;
+  27   1          e=1;
+  28   1          msdelay(1);
+  29   1          e=0;
+  30   1      }
+  31          
+  32          void lcd_data(unsigned char disp_data)  //Function to send display data to LCD
+  33          {
+  34   1          lcd = disp_data;
+  35   1          rs= 1;
+  36   1          rw=0;
+  37   1          e=1;
+  38   1          msdelay(1);
+  39   1          e=0;
+  40   1      }
+  41          
+  42          void lcd_init()    //Function to prepare the LCD  and get it ready
+  43          {
+  44   1          lcd_cmd(0x38);  // for using 2 lines and 5X7 matrix of LCD
+  45   1          msdelay(10);
+  46   1          lcd_cmd(0x0F);  // turn display ON, cursor blinking
+  47   1          msdelay(10);
+  48   1          lcd_cmd(0x01);  //clear screen
+  49   1          msdelay(10);
+  50   1          lcd_cmd(0x81);  // bring cursor to position 1 of line 1
+  51   1          msdelay(10);
+  52   1      }
+  53          
+  54          void row_finder1() //Function for finding the row for column 1
+C51 COMPILER V9.60.0.0   KEYPAD4X4                                                         07/08/2021 23:08:03 PAGE 2   
+
+  55          {
+  56   1        R1=R2=R3=R4=1;
+  57   1        C1=C2=C3=C4=0;
+  58   1      
+  59   1        if(R1==0)
+  60   1        lcd_data('+');//1
+  61   1        if(R2==0)
+  62   1        lcd_data('-');//4
+  63   1        if(R3==0)
+  64   1        lcd_data('*');//7
+  65   1        if(R4==0)
+  66   1        lcd_data('/');//*
+  67   1      }
+  68          
+  69          void row_finder2() //Function for finding the row for column 2
+  70          {
+  71   1        R1=R2=R3=R4=1;
+  72   1        C1=C2=C3=C4=0;
+  73   1      
+  74   1        if(R1==0)
+  75   1        lcd_data('=');//2
+  76   1        if(R2==0)
+  77   1        lcd_data('3');//5
+  78   1        if(R3==0)
+  79   1        lcd_data('6');//8
+  80   1        if(R4==0)
+  81   1        lcd_data('9');//0
+  82   1      }
+  83          
+  84          void row_finder3() //Function for finding the row for column 3
+  85          {
+  86   1        R1=R2=R3=R4=1;
+  87   1        C1=C2=C3=C4=0;
+  88   1      
+  89   1        if(R1==0)
+  90   1        lcd_data('0');//3
+  91   1        if(R2==0)
+  92   1        lcd_data('2');//6
+  93   1        if(R3==0)
+  94   1        lcd_data('5');//9
+  95   1        if(R4==0)
+  96   1        lcd_data('8');//#
+  97   1      }
+  98          
+  99          void row_finder4() //Function for finding the row for column 4
+ 100          {
+ 101   1        R1=R2=R3=R4=1;
+ 102   1        C1=C2=C3=C4=0;
+ 103   1      
+ 104   1        if(R1==0)
+ 105   1        lcd_data('C');//a
+ 106   1        if(R2==0)
+ 107   1        lcd_data('1');//b
+ 108   1        if(R3==0)
+ 109   1        lcd_data('4');//c
+ 110   1        if(R4==0)
+ 111   1        lcd_data('7');//d
+ 112   1      }
+ 113          
+ 114          void main()
+ 115          {
+ 116   1          int i;
+C51 COMPILER V9.60.0.0   KEYPAD4X4                                                         07/08/2021 23:08:03 PAGE 3   
+
+ 117   1          char str[]="KEYPAD WITH LCD";
+ 118   1          lcd_init();
+ 119   1          while(str[i]!='\0')  //Display well come message on 16x2 lcd sccreen
+ 120   1          {
+ 121   2            lcd_data(str[i]);
+ 122   2            i++;
+ 123   2          }
+ 124   1          msdelay(100);
+ 125   1          lcd_cmd(0x01);  //clear screen
+ 126   1          msdelay(10);
+ 127   1          while(1)
+ 128   1          {    
+ 129   2            msdelay(30); 
+ 130   2            C1=C2=C3=C4=1;
+ 131   2            R1=R2=R3=R4=0;
+ 132   2            if(C1==0)
+ 133   2            row_finder1();
+ 134   2            else if(C2==0)
+ 135   2            row_finder2();
+ 136   2            else if(C3==0)
+ 137   2            row_finder3();
+ 138   2            else if(C4==0)
+ 139   2            row_finder4();
+ 140   2          }
+ 141   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    409    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

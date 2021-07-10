@@ -1,0 +1,183 @@
+C51 COMPILER V9.60.0.0   ADC                                                               07/09/2021 13:17:44 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN .\Objects\adc.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE adc.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\adc.l
+                    -st) TABS(2) OBJECT(.\Objects\adc.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          //ADC pin configuration
+   4          sbit A0 = P1^0; 
+   5          sbit A1 = P1^1; 
+   6          sbit A2 = P1^2;
+   7           
+   8          sbit SOC = P1^3; // Start convert pin
+   9          sbit ALE = P1^4; // Address latch enable pin
+  10          sbit EOC = P1^5; // End of Conversion
+  11          sbit OE = P1^6;  //output enable  
+  12          sfr ADC_Output = 0x80; // Port 0
+  13          
+  14          // LCD pin configuration
+  15          sfr LCD = 0xA0;// PORT 2
+  16          sbit rs = P3^0;
+  17          sbit rw = P3^1;
+  18          sbit en = P3^2;
+  19          
+  20          
+  21          void lcd_init();
+  22          void message_send(unsigned char *);
+  23          void lcd_cmd(unsigned char );
+  24          void lcd_data(unsigned char);
+  25          void time_delay();
+  26          void time_delay1();
+  27          void cmd_delay();
+  28          
+  29          void convert_data(unsigned char);
+  30          
+  31          unsigned char mydata;
+  32          
+  33          void main()
+  34          {
+  35   1           lcd_init();
+  36   1          
+  37   1           EOC = 1;
+  38   1           ALE = 0;
+  39   1           OE = 0;
+  40   1           SOC = 0;
+  41   1          lcd_cmd(0x80);
+  42   1          message_send("ADC init");
+  43   1          cmd_delay();
+  44   1          lcd_cmd(0xC5);
+  45   1          message_send("done");
+  46   1          cmd_delay();
+  47   1           while(1)
+  48   1           {
+  49   2            A0 = 1; A1 = 1; A2 = 1; // if a0 = a1 = a2 = 1, IN7 pin selected so output of sensor connected to IN7
+             - pin
+  50   2            time_delay();
+  51   2            ALE = 1;  //high  pulse passing
+  52   2            time_delay();
+  53   2            SOC = 1;   //high  pulse passing
+C51 COMPILER V9.60.0.0   ADC                                                               07/09/2021 13:17:44 PAGE 2   
+
+  54   2            time_delay();
+  55   2            ALE = 0;   //low pulse passing
+  56   2            SOC = 0;   //low pulse passing , so total high to low pulse
+  57   2          
+  58   2      //      while(EOC == 1);
+  59   2            while(EOC == 0);
+  60   2            OE = 1;
+  61   2            time_delay();
+  62   2            mydata = ADC_Output;
+  63   2            OE = 0;
+  64   2          convert_data(mydata);
+  65   2         }
+  66   1      }
+  67          void convert_data(unsigned char mydata)
+  68          {
+  69   1        
+  70   1        unsigned char z1, z2, z3 , x, y;
+  71   1        
+  72   1        x= mydata;   // ex  data = 145
+  73   1        y = x / 10; // 14
+  74   1        z1 = x % 10; // 5 
+  75   1        z2 = y % 10; // 4
+  76   1        z3 = y / 10; // 1
+  77   1      
+  78   1        z1 = z1 + 0x30; // 35
+  79   1        z2 = z2+ 0x30; // 34
+  80   1        z3 = z3 +0x30; // 31
+  81   1        
+  82   1        lcd_cmd(0x80);
+  83   1           message_send("ADC value");
+  84   1          cmd_delay();
+  85   1          lcd_cmd(0xC5);
+  86   1          message_send(" = ");
+  87   1          cmd_delay(); 
+  88   1      
+  89   1        lcd_data(z3);
+  90   1        lcd_data(z2);
+  91   1        lcd_data(z1);
+  92   1      }
+  93          void lcd_init()
+  94          {
+  95   1        lcd_cmd(0x38);//  2 line , 5x7 matrix activated
+  96   1        time_delay1();
+  97   1        lcd_cmd(0x0E); //display on cursor blinking
+  98   1        time_delay1();
+  99   1        lcd_cmd(0x01);  // clear screen
+ 100   1        time_delay1();
+ 101   1        //lcd_cmd(0x06);  // shift cursor to right
+ 102   1      
+ 103   1        time_delay1();
+ 104   1          lcd_cmd(0x80);
+ 105   1          message_send("lcd init");
+ 106   1          cmd_delay();
+ 107   1          lcd_cmd(0xC5);
+ 108   1          message_send("done");
+ 109   1          cmd_delay();
+ 110   1        
+ 111   1      }
+ 112          void lcd_cmd(unsigned char val1)
+ 113          {
+ 114   1        LCD = val1;
+ 115   1        rs = 0;       // for command send to display
+C51 COMPILER V9.60.0.0   ADC                                                               07/09/2021 13:17:44 PAGE 3   
+
+ 116   1        rw = 0;
+ 117   1        en = 1;
+ 118   1        cmd_delay();
+ 119   1        en = 0;
+ 120   1      }
+ 121          void message_send(unsigned char *p)
+ 122          {
+ 123   1        while(*p !='\0')
+ 124   1        {
+ 125   2          lcd_data(*p);
+ 126   2          p++;
+ 127   2        }
+ 128   1      }
+ 129          void lcd_data(unsigned char val2)
+ 130          {
+ 131   1        
+ 132   1        LCD = val2;
+ 133   1        rs = 1;   // for data  send to display
+ 134   1        rw = 0;
+ 135   1        en = 1;
+ 136   1        cmd_delay();
+ 137   1        en = 0;
+ 138   1      }
+ 139          void time_delay()
+ 140          {
+ 141   1        int i;
+ 142   1        for(i = 0; i<1000; i++);  
+ 143   1      }
+ 144          void time_delay1()
+ 145          {
+ 146   1        int j;
+ 147   1        for(j = 0; j<100; j++); 
+ 148   1      }
+ 149          
+ 150          void cmd_delay()
+ 151          {
+ 152   1        int i;
+ 153   1        for(i = 0; i<10000; i++); 
+ 154   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    347    ----
+   CONSTANT SIZE    =     37    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
