@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\voltmeter.obj" 
+TO ".\Objects\voltmeter" 
+PRINT(".\Listings\voltmeter.m51")

@@ -1,0 +1,314 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    07/13/2021  21:01:57  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\voltmeter.obj TO .\Objects\voltmeter PRINT (.\Listings\volt
+>> meter.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\voltmeter.obj (VOLTMETER)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  .\Objects\voltmeter (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?VOLTMETER
+            DATA    000CH     0003H     UNIT         _DATA_GROUP_
+            IDATA   000FH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0098H     UNIT         ?PR?MAIN?VOLTMETER
+            CODE    0898H     0080H     UNIT         ?C?LIB_CODE
+            CODE    0918H     0064H     UNIT         ?PR?_HEX2LCD?VOLTMETER
+            CODE    097CH     0025H     UNIT         ?PR?_LCD_STRING?VOLTMETER
+            CODE    09A1H     001EH     UNIT         ?PR?LCD_INIT?VOLTMETER
+            CODE    09BFH     0013H     UNIT         ?CO?VOLTMETER
+            CODE    09D2H     0010H     UNIT         ?PR?BUSY?VOLTMETER
+            CODE    09E2H     0010H     UNIT         ?PR?READ?VOLTMETER
+            CODE    09F2H     000EH     UNIT         ?PR?_LCD_CMD?VOLTMETER
+            CODE    0A00H     000EH     UNIT         ?PR?_LCD_DATA?VOLTMETER
+            CODE    0A0EH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0A1AH     000CH     UNIT         ?PR?CONV?VOLTMETER
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\voltmeter (?C_STARTUP)
+
+
+SEGMENT                             DATA_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH
+-------------------------------------------------
+?C_C51STARTUP                     -----    -----
+  +--> ?PR?MAIN?VOLTMETER
+
+?PR?MAIN?VOLTMETER                -----    -----
+  +--> ?PR?LCD_INIT?VOLTMETER
+  +--> ?CO?VOLTMETER
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/13/2021  21:01:57  PAGE 2
+
+
+  +--> ?PR?_LCD_STRING?VOLTMETER
+  +--> ?PR?CONV?VOLTMETER
+  +--> ?PR?READ?VOLTMETER
+  +--> ?PR?_LCD_CMD?VOLTMETER
+  +--> ?PR?_HEX2LCD?VOLTMETER
+  +--> ?PR?_LCD_DATA?VOLTMETER
+
+?PR?LCD_INIT?VOLTMETER            -----    -----
+  +--> ?PR?_LCD_CMD?VOLTMETER
+
+?PR?_LCD_CMD?VOLTMETER            -----    -----
+  +--> ?PR?BUSY?VOLTMETER
+
+?PR?_LCD_STRING?VOLTMETER         000CH    0003H
+  +--> ?PR?_LCD_DATA?VOLTMETER
+
+?PR?_LCD_DATA?VOLTMETER           -----    -----
+  +--> ?PR?BUSY?VOLTMETER
+
+?PR?_HEX2LCD?VOLTMETER            -----    -----
+  +--> ?PR?_LCD_DATA?VOLTMETER
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\voltmeter (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0A0EH         SEGMENT       ?C_C51STARTUP
+  I:000FH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0A11H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0A0EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0A0EH         LINE#         133
+  C:0A10H         LINE#         134
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/13/2021  21:01:57  PAGE 3
+
+
+  C:0A11H         LINE#         135
+  C:0A12H         LINE#         136
+  C:0A14H         LINE#         185
+  C:0A17H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        VOLTMETER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A0H.7       PUBLIC        flag
+  C:09E2H         PUBLIC        read
+  C:0800H         PUBLIC        main
+  D:0008H         PUBLIC        adc
+  C:0918H         PUBLIC        _hex2lcd
+  C:097CH         PUBLIC        _lcd_string
+  C:0A00H         PUBLIC        _lcd_data
+  C:0A1AH         PUBLIC        conv
+  B:00B0H.4       PUBLIC        intr
+  C:09D2H         PUBLIC        busy
+  D:000AH         PUBLIC        adc_avg
+  C:09F2H         PUBLIC        _lcd_cmd
+  C:09A1H         PUBLIC        lcd_init
+  B:00B0H.2       PUBLIC        en
+  B:00B0H.5       PUBLIC        cs
+  B:00B0H.7       PUBLIC        rd
+  B:00B0H.0       PUBLIC        rs
+  B:00B0H.6       PUBLIC        wr
+  B:00B0H.1       PUBLIC        rw
+  -------         PROC          BUSY
+  C:09D2H         LINE#         9
+  C:09D2H         LINE#         10
+  C:09D2H         LINE#         11
+  C:09D4H         LINE#         12
+  C:09D6H         LINE#         13
+  C:09D8H         LINE#         14
+  C:09DBH         LINE#         15
+  C:09DBH         LINE#         16
+  C:09DDH         LINE#         17
+  C:09DFH         LINE#         18
+  C:09E1H         LINE#         19
+  -------         ENDPROC       BUSY
+  -------         PROC          _LCD_CMD
+  D:0007H         SYMBOL        val_lcd
+  C:09F2H         LINE#         21
+  C:09F2H         LINE#         22
+  C:09F2H         LINE#         23
+  C:09F5H         LINE#         24
+  C:09F7H         LINE#         25
+  C:09F9H         LINE#         26
+  C:09FBH         LINE#         27
+  C:09FDH         LINE#         28
+  C:09FFH         LINE#         29
+  -------         ENDPROC       _LCD_CMD
+  -------         PROC          _LCD_DATA
+  D:0007H         SYMBOL        dat
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/13/2021  21:01:57  PAGE 4
+
+
+  C:0A00H         LINE#         31
+  C:0A00H         LINE#         32
+  C:0A00H         LINE#         33
+  C:0A03H         LINE#         34
+  C:0A05H         LINE#         35
+  C:0A07H         LINE#         36
+  C:0A09H         LINE#         37
+  C:0A0BH         LINE#         38
+  C:0A0DH         LINE#         39
+  -------         ENDPROC       _LCD_DATA
+  -------         PROC          _LCD_STRING
+  D:000CH         SYMBOL        string
+  C:097CH         LINE#         41
+  C:0982H         LINE#         42
+  C:0982H         LINE#         43
+  C:098DH         LINE#         44
+  C:09A0H         LINE#         45
+  -------         ENDPROC       _LCD_STRING
+  -------         PROC          LCD_INIT
+  C:09A1H         LINE#         47
+  C:09A1H         LINE#         48
+  C:09A1H         LINE#         49
+  C:09A6H         LINE#         50
+  C:09ABH         LINE#         51
+  C:09B0H         LINE#         52
+  C:09B5H         LINE#         53
+  C:09BAH         LINE#         54
+  -------         ENDPROC       LCD_INIT
+  -------         PROC          _HEX2LCD
+  D:0007H         SYMBOL        hex
+  -------         DO            
+  D:0006H         SYMBOL        temp1
+  D:0005H         SYMBOL        temp2
+  -------         ENDDO         
+  C:0918H         LINE#         57
+  C:0918H         LINE#         58
+  C:0918H         LINE#         60
+  C:091AH         LINE#         61
+  C:091CH         LINE#         62
+  C:091CH         LINE#         63
+  C:0920H         LINE#         64
+  C:092BH         LINE#         65
+  C:092CH         LINE#         66
+  C:0934H         LINE#         67
+  C:0945H         LINE#         68
+  C:094CH         LINE#         69
+  C:094EH         LINE#         70
+  C:0952H         LINE#         71
+  C:0952H         LINE#         72
+  C:0956H         LINE#         73
+  C:0962H         LINE#         74
+  C:0963H         LINE#         75
+  C:096BH         LINE#         76
+  C:0972H         LINE#         77
+  C:0976H         LINE#         78
+  -------         ENDPROC       _HEX2LCD
+  -------         PROC          CONV
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/13/2021  21:01:57  PAGE 5
+
+
+  C:0A1AH         LINE#         90
+  C:0A1AH         LINE#         91
+  C:0A1AH         LINE#         92
+  C:0A1CH         LINE#         93
+  C:0A1EH         LINE#         94
+  C:0A20H         LINE#         95
+  C:0A22H         LINE#         96
+  C:0A25H         LINE#         97
+  -------         ENDPROC       CONV
+  -------         PROC          READ
+  C:09E2H         LINE#         99
+  C:09E2H         LINE#         100
+  C:09E2H         LINE#         101
+  C:09E4H         LINE#         102
+  C:09E6H         LINE#         103
+  C:09EDH         LINE#         104
+  C:09EFH         LINE#         105
+  C:09F1H         LINE#         106
+  -------         ENDPROC       READ
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0800H         LINE#         108
+  C:0800H         LINE#         109
+  C:0800H         LINE#         111
+  C:0803H         LINE#         112
+  C:080CH         LINE#         113
+  C:080CH         LINE#         114
+  C:080CH         LINE#         115
+  C:0811H         LINE#         116
+  C:0823H         LINE#         117
+  C:0823H         LINE#         118
+  C:0826H         LINE#         119
+  C:0829H         LINE#         120
+  C:0835H         LINE#         121
+  C:0838H         LINE#         122
+  C:0847H         LINE#         123
+  C:084CH         LINE#         124
+  C:0855H         LINE#         125
+  C:0864H         LINE#         127
+  C:086EH         LINE#         128
+  C:0873H         LINE#         129
+  C:0882H         LINE#         130
+  C:0890H         LINE#         132
+  C:0895H         LINE#         133
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        VOLTMETER
+
+  -------         MODULE        ?C?CLDPTR
+  C:0898H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?IMUL
+  C:08B1H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/13/2021  21:01:57  PAGE 6
+
+
+  -------         MODULE        ?C?UIDIV
+  C:08C3H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01A9H BYTE (20%) *
+******************************************************************************
+
+Program Size: data=16.0 xdata=0 code=553
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
