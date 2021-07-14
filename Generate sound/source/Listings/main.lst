@@ -1,0 +1,53 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/14/2021 15:18:49 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          // *  Name     : main.c
+   2          // *  Purpose  : Program to generate different sounds with AT89C52.
+   3          // *  Author   : Sunil Pawar
+   4          // *  Date     : 09-07-2021
+   5          // */
+   6          
+   7          #include<reg51.h> // Header File
+   8          
+   9          void delay(int time) // Delay Function
+  10          {
+  11   1      int i,j;
+  12   1      for(i=0;i<time;i++)
+  13   1      for(j=0;j<1275;j++);
+  14   1      }
+  15          
+  16          sbit pin_1 = P2^0; // Single bit define for pin 1
+  17          
+  18          
+  19          
+  20          void main()
+  21          {
+  22   1      while(1)
+  23   1      {
+  24   2      pin_1 = 0; // on
+  25   2      delay(100);
+  26   2      pin_1 = 1; // off
+  27   2      delay(100);
+  28   2      }
+  29   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     54    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

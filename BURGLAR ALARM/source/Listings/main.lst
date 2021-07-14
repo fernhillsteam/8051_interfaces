@@ -1,0 +1,106 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/14/2021 23:30:11 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          //
+   2          // *  Name     : main.c
+   3          // *  Purpose  : Program to BURGLAR ALARM USING 8051 MICROCONTROLLER AND PIR SENSOR (Passive Infra Red )
+   4          // *  Author   : Sunil Pawar
+   5          // *  Date     : 14-07-2021
+   6          // */
+   7          #include<reg51.h>
+   8          sbit PIR = P1^0;
+   9          sbit buzzer = P1^1;
+  10          sbit rs=P2^0;
+  11          sbit rw=P2^1;
+  12          sbit en=P2^2;
+  13          
+  14          void lcd_init();
+  15          void lcdcmd(unsigned char);
+  16          void lcddat(unsigned char);
+  17          void lcddisplay(unsigned char *s);
+  18          void delay();
+  19          void main()
+  20          {
+  21   1        int i;
+  22   1        lcd_init();
+  23   1        lcddisplay(" ALARM DETECTOR ");
+  24   1        lcdcmd(0xc0);
+  25   1        lcddisplay("USING PIR SENSOR");
+  26   1        while(1)
+  27   1        {
+  28   2          if(PIR == 1)
+  29   2          {
+  30   3            lcdcmd(0xc0);
+  31   3            lcddisplay("intruder detect");
+  32   3            delay();
+  33   3          }
+  34   2          else
+  35   2          {
+  36   3            lcdcmd(0xc0);
+  37   3            lcddisplay("                      ");
+  38   3          }
+  39   2        }
+  40   1      }
+*** WARNING C280 IN LINE 21 OF main.c: 'i': unreferenced local variable
+  41          void lcd_init()
+  42          {
+  43   1        lcdcmd(0x38);
+  44   1        lcdcmd(0x0c);
+  45   1        lcdcmd(0x06);
+  46   1        lcdcmd(0x01);
+  47   1        lcdcmd(0x80);
+  48   1      }
+  49          void lcdcmd(unsigned char val)
+  50          {
+  51   1        P3=val;
+  52   1        rs=0;
+  53   1        rw=0;
+C51 COMPILER V9.60.0.0   MAIN                                                              07/14/2021 23:30:11 PAGE 2   
+
+  54   1        en=1;
+  55   1        delay();
+  56   1        en=0;
+  57   1      }
+  58          void lcddat(unsigned char dat)
+  59          {
+  60   1        P3=dat;
+  61   1        rs=1;
+  62   1        rw=0;
+  63   1        en=1;
+  64   1        delay();
+  65   1        en=0;
+  66   1      }
+  67          void lcddisplay(unsigned char *s)
+  68          {
+  69   1        unsigned char i;
+  70   1        for(i=0;s[i]!='\0';i++)
+  71   1        {
+  72   2          lcddat(s[i]);
+  73   2        }
+  74   1      }
+  75          void delay()
+  76          {
+  77   1        int i;
+  78   1        for(i=0;i<20000;i++);
+  79   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    167    ----
+   CONSTANT SIZE    =     73    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

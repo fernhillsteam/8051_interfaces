@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\buzzer.obj" 
+TO ".\Objects\generate sound" 
+PRINT(".\Listings\generate sound.m51")

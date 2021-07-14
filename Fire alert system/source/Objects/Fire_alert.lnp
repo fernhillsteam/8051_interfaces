@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\Fire_alert" 
+PRINT(".\Listings\Fire_alert.m51")

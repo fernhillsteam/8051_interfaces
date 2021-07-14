@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\LCD_custom_characters" 
+PRINT(".\Listings\LCD_custom_characters.m51")
