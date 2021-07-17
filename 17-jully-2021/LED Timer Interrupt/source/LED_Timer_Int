@@ -1,0 +1,19 @@
+// timer interrupt programming using Timer0 model for blinking LED using interrupt method
+
+#include< reg51 .h>   
+sbit Blink Led = P2^0;  // LED is connected to port 2 Zeroth pin  
+void timer0_ISR (void) interrupt 1  //interrupt no. 1 for Timer0  
+ {  
+Blink Led=~Blink Led;   // Blink LED on interrupt   
+TH0=0xFC;   // loading initial values to timer   
+TL0=0x66;  
+}   
+void main()   
+{  
+TMOD=0x0l;      // mode 1 of Timer0  
+TH0 = 0xFC:    // initial value is loaded to timer  
+TL0 = 0x66:           
+ET0 =1;         // enable timer 0 interrupt  
+TR0 = 1;        // start timer  
+while (1);      // do nothing  
+ }  

@@ -1,0 +1,46 @@
+C51 COMPILER V9.60.0.0   LED_TIMER_INT                                                     07/17/2021 19:49:19 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LED_TIMER_INT
+OBJECT MODULE PLACED IN .\Objects\LED_Timer_Int.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE LED_Timer_Int.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\LED_Timer_Int.lst) TABS(2) OBJECT(.\Objects\LED_Timer_Int.obj)
+
+line level    source
+
+   1          /// timer interrupt programming using Timer0 model for blinking LED using interrupt method
+   2          
+   3          #include<reg51.h>
+   4          sbit LED = P2^0; // this will be blinking every 50ms
+   5          
+   6          void timer0_isr() interrupt 1
+   7          {
+   8   1          TH0  = 0X4B;        //ReLoad the timer value
+   9   1          TL0  = 0XFD;
+  10   1          LED =!LED;        // Toggle the LED pin 
+  11   1      }
+  12          
+  13          void main()
+  14          {
+  15   1          TMOD = 0x01;       //Timer0 mode 1 
+  16   1          TH0 = 0X4B;        //Load the timer value
+  17   1          TL0 = 0XFD;
+  18   1          TR0 = 1;           //turn ON Timer zero
+  19   1          ET0 = 1;           //Enable TImer0 Interrupt
+  20   1          EA = 1;            //Enable Global Interrupt bit
+  21   1          while(1){} 
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     26    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

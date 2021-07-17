@@ -1,0 +1,74 @@
+C51 COMPILER V9.60.0.0   LED                                                               07/17/2021 19:56:39 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN .\Objects\led.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE led.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\led.l
+                    -st) TABS(2) OBJECT(.\Objects\led.obj)
+
+line level    source
+
+   1          
+   2          #include<reg51.h>
+   3          void main()
+   4          {
+   5   1        unsigned int i;
+   6   1        while(1)
+   7   1        {
+   8   2          P2=0x00;
+   9   2          for(i=0;i<30000;i++);
+  10   2          P2=0x07;
+  11   2          for(i=0;i<30000;i++);
+  12   2        }
+  13   1      }
+  14          
+  15          
+  16          //  Curtain effect //
+  17          /*    
+  18          #include "REG52.h"
+  19          void delay();
+  20          void main()
+  21          {
+  22            while(1)
+  23            {
+  24              P2=0x81;         //different values on LEDs
+  25              delay();
+  26              P2=0xC3;        //different values on LEDs
+  27              delay();
+  28              P2=0xE7;        //different values on LEDs
+  29              delay();
+  30              P2=0xFF;        //different values on LEDs
+  31              delay();
+  32              P2=0xE7;        //different values on LEDs
+  33              delay();
+  34              P2=0xC3;        //different values on LEDs
+  35              delay();
+  36              P2=0x81;        //different values on LEDs
+  37              delay();
+  38              P2=0x00;        //different values on LEDs
+  39              delay();
+  40            }
+  41          } 
+  42          
+  43          void delay()              // delay function
+  44          {
+  45            long int k;
+  46            for(k=0;k<30000;k++);
+  47          }
+  48          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     38    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   LED                                                               07/17/2021 19:56:39 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

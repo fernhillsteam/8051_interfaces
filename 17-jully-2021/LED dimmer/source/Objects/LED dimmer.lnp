@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\LED dimmer" 
+PRINT(".\Listings\LED dimmer.m51")

@@ -1,0 +1,1 @@
+"led_pwm.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\led_pwm.lst) TABS (2) OBJECT(.\Objects\led_pwm.obj)

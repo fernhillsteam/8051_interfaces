@@ -1,0 +1,63 @@
+C51 COMPILER V9.60.0.0   LED_PWM                                                           07/17/2021 21:19:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LED_PWM
+OBJECT MODULE PLACED IN .\Objects\led_pwm.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE led_pwm.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\l
+                    -ed_pwm.lst) TABS(2) OBJECT(.\Objects\led_pwm.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit Pwm_Pin=P1^0;
+   3          
+   4          void Pwm_Low()
+   5          {
+   6   1      Pwm_Pin=0;
+   7   1      TH0=0xFF;
+   8   1      TL0=0x47;
+   9   1      TR0=1;       //Run Timer-0
+  10   1      while(!TF0); //Wait for T0 Interrupt Flag
+  11   1      TF0=0;       //Clear Interrupt Flag
+  12   1      TR0=0;       //Stop Timer-0
+  13   1      }
+  14          
+  15          
+  16          void Pwm_High()
+  17          {
+  18   1      TR0=1;       //Run Timer-0
+  19   1      while(!TF0); //Wait for T0 Interrupt Flag
+  20   1      TF0=0;       //Clear Interrupt Flag
+  21   1      TR0=0;       //Stop Timer-0
+  22   1      
+  23   1      Pwm_Low();
+  24   1      }
+  25          
+  26          void main()
+  27          {
+  28   1      P1=0x00;
+  29   1      
+  30   1        TMOD=0x01; //Timer-0, As 16-bit Timer.
+  31   1      
+  32   1        while(1)
+  33   1        { 
+  34   2        Pwm_Pin=1;
+  35   2        TH0=0xFF;
+  36   2        TL0=0xDA; 
+  37   2        Pwm_High();
+  38   2        }
+  39   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     49    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

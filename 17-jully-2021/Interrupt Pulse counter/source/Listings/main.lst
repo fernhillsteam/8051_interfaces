@@ -1,0 +1,119 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/17/2021 21:51:40 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*  Name     : main.c
+   2           *  Purpose  : Source code for Interrupt Pulse counter with AT89C51.
+   3           *  Author   : Sunil Pawar
+   4           *  Date     : 17-07-2021
+   5           */
+   6          
+   7          #include <reg51.h>
+   8          sbit entry=P1^0;
+   9          sbit exit=P1^1;
+  10          sbit rs=P3^0;
+  11          sbit rw=P3^1;
+  12          sbit en=P3^2;
+  13          void lcd_init();
+  14          void lcd_cmd(unsigned char);
+  15          void lcd_data(unsigned char);
+  16          void lcd_display(unsigned char *s);
+  17          void lcd_conversion(unsigned char);
+  18          void delay();
+  19          
+  20          void main()
+  21          {
+  22   1        unsigned char x;
+  23   1        lcd_init();
+  24   1        lcd_display("WELCOME TO");
+  25   1        lcd_cmd(0xc0);
+  26   1        delay();
+  27   1        lcd_display("Interrupt Counter");
+  28   1        delay();
+  29   1        while(1)
+  30   1        {
+  31   2          if(entry==0)
+  32   2          {
+  33   3            lcd_cmd(0x01);
+  34   3            lcd_display("COUNT IS = ");
+  35   3            delay();
+  36   3            x=x+1;
+  37   3            lcd_conversion(x);
+  38   3          } 
+  39   2        }
+  40   1      }
+  41          
+  42          void lcd_init()
+  43          {
+  44   1        lcd_cmd(0x38);
+  45   1        lcd_cmd(0x01);
+  46   1        lcd_cmd(0x10);
+  47   1        lcd_cmd(0x0c);
+  48   1        lcd_cmd(0x80);
+  49   1      }
+  50          
+  51          void lcd_cmd(unsigned char value)
+  52          {
+  53   1        P2=value;
+  54   1        rs=0;
+C51 COMPILER V9.60.0.0   MAIN                                                              07/17/2021 21:51:40 PAGE 2   
+
+  55   1        rw=0;
+  56   1        en=1;
+  57   1        delay();
+  58   1        en=0;
+  59   1      }
+  60          void lcd_data(unsigned char dat)
+  61          {
+  62   1        P2=dat;
+  63   1        rs=1;
+  64   1        rw=0;
+  65   1        en=1;
+  66   1        delay();
+  67   1        en=0;
+  68   1      }
+  69          void lcd_display(unsigned char *s)
+  70          {   
+  71   1        while(*s !='\0')
+  72   1        {
+  73   2          lcd_data(*s);
+  74   2          s++;
+  75   2        }
+  76   1      }
+  77          void lcd_conversion(unsigned char num)
+  78          {
+  79   1        unsigned char p,n;
+  80   1        p=num/10;
+  81   1        n=num%10;
+  82   1        p=p+0x30;
+  83   1        n=n+0x30;
+  84   1        lcd_data(p);
+  85   1        lcd_data(n);  
+  86   1      }
+  87          void delay()
+  88          {
+  89   1        unsigned int k,l;
+  90   1        for(k=0;k<3000;k++);
+  91   1        for(l=0;l<100;l++);
+  92   1      }
+  93          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    212    ----
+   CONSTANT SIZE    =     41    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
