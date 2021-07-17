@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\Interrupt_Counter" 
+PRINT(".\Listings\Interrupt_Counter.m51")
